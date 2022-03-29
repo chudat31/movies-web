@@ -11,6 +11,7 @@ import ComedyFilter from '../components/ComedyFilter.vue';
 import HorrorFilter from '../components/HorrorFilter.vue';
 import FeatureFilm from '../components/FeatureFilm.vue';
 import TvMovies from '../components/TvMovies.vue';
+import PageNotFound from '../components/PageNotFound.vue';
 const routes = [{
         path: '/signup',
         component: SignUp
@@ -59,7 +60,10 @@ const routes = [{
         path: '/tvmovies',
         component: TvMovies,
     },
-
+    {
+        path: '/:pathMatch(.*)*',
+        component: PageNotFound
+    }
 ]
 
 const router = createRouter({
