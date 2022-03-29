@@ -100,4 +100,10 @@ h2 {
     text-align: center;
     text-transform: uppercase;
 }
+@media screen and (max-width:937px) {
+  .film {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
 </style>

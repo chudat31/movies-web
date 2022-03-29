@@ -59,7 +59,7 @@ export default {
 }
 .film-item {
   margin: 4px;
-  transition: 2s;
+  transition: 1s;
 }
 .detail {
   background-color: rgb(21, 133, 99);

@@ -4,11 +4,11 @@
     <div class="film">
       <div class="film-item" v-for="film in films" :key="film.imdbID">
         <router-link :to="'/movie/' + film.imdbID" class="film-link">
-          <div class="poster">
+          <div v-if="film.Poster!=='N/A'" class="poster">
             <img :src="film.Poster" alt="Movie Poster" />
             <p class="type"><strong>{{ film.Type }}</strong></p>
           </div>
-          <div class="detail">
+          <div v-if="film.Poster!=='N/A'" class="detail">
             <p>
               <strong>{{ film.Title }}</strong>
             </p>
@@ -32,7 +32,7 @@ export default {
   },
   mounted() {
     axios
-      .get("https://www.omdbapi.com/?s=annabelle&apikey=7f478e24&type=movie")
+      .get("https://www.omdbapi.com/?s=insidious&apikey=7f478e24&type=movie")
       .then((res) => {
            this.films = res.data.Search;
       });
