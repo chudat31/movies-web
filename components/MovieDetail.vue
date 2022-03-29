@@ -2,20 +2,46 @@
   <WebHeader />
   <div class="movie-detail">
     <div class="video">
-      <iframe :src="video.linkEmbed" allowfullscreen frameborder="0"></iframe>
+      <iframe
+        title="movie.title"
+        :src="getLink()"
+        allowfullscreen
+        frameborder="0"
+      ></iframe>
+      <!-- <iframe v-else-if="!getLink()" src="video.linkEmbed" frameborder="0"></iframe> -->
+      <!-- <img v-else :src="movie.image" alt="" /> -->
     </div>
     <div class="content">
       <h2>{{ movie.title }}</h2>
-      <p><strong><i>Released: </i></strong>{{ movie.releaseDate }}</p>
-      <p><strong><i>Plot: </i></strong>{{ movie.plot }}</p>
-      <p><strong><i>Actors: </i></strong>{{ movie.stars }}</p>
-      <p><strong><i>Country: </i></strong>{{ movie.countries }}</p>
-      <p><strong><i>Genre: </i></strong>{{ movie.genres }}</p>
-      <p><strong><i>Companies Production: </i></strong> {{ movie.companies }}</p>
-      <p><strong><i>Runtime: </i></strong> {{ movie.runtimeStr }}</p>
-      <p><strong><i>Directors: </i></strong> {{ movie.directors }}</p>
+      <p>
+        <strong><i>Released: </i></strong>{{ movie.releaseDate }}
+      </p>
+      <p class="plot">
+        <strong> <i>Plot: </i> </strong>{{ movie.plot }}
+      </p>
+      <p>
+        <strong><i>Actors: </i></strong>{{ movie.stars }}
+      </p>
+      <p>
+        <strong><i>Country: </i></strong>{{ movie.countries }}
+      </p>
+      <p>
+        <strong><i>Genre: </i></strong>{{ movie.genres }}
+      </p>
+      <p>
+        <strong><i>Companies Production: </i></strong> {{ movie.companies }}
+      </p>
+      <p>
+        <strong><i>Directors: </i></strong> {{ movie.directors }}
+      </p>
+      <p>
+        <strong><i>Runtime: </i></strong> {{ movie.runtimeStr }}
+      </p>
     </div>
   </div>
+  <p>
+    <strong><i>Keywords: </i></strong> {{ movie.keywords }}
+  </p>
   <h2>DIỄN VIÊN</h2>
   <div class="actor-list">
     <div class="actor-item" v-for="actor in actors" :key="actor.id">
@@ -50,7 +76,7 @@
 <script>
 import WebHeader from "./WebHeader.vue";
 import WebFooter from "./WebFooter.vue";
-import { ref, onMounted, } from "vue";
+import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import api from "@/api.js";
 import axios from "axios";
@@ -66,27 +92,20 @@ export default {
     onMounted(() => {
       axios
         .get(
-          `https://imdb-api.com/en/API/Title/${api.apikey3}/${route.params.id}`
+          `https://imdb-api.com/en/API/Title/${api.apikey4}/${route.params.id}`
         )
         .then((data) => {
           movie.value = data.data;
         });
     });
-    
-    const getLink = (() => {
-      axios
-        .get(
-          `https://imdb-api.com/en/API/Title/${api.apikey3}/${route.params.id}`
-        )
-        .then((data) => {
-          return "https://www.2embed.ru/embed/imdb/movie?id=" + data.data.id ;
-        });
-    });
-    onMounted(getLink);
+
+    const getLink = () => {
+      return "https://www.2embed.ru/embed/imdb/movie?id=" + route.params.id;
+    };
     onMounted(() => {
       axios
         .get(
-          `https://imdb-api.com/en/API/Trailer/${api.apikey3}/${route.params.id}`
+          `https://imdb-api.com/en/API/Trailer/${api.apikey4}/${route.params.id}`
         )
         .then((data) => {
           video.value = data.data;
@@ -95,7 +114,7 @@ export default {
     onMounted(() => {
       axios
         .get(
-          `https://imdb-api.com/en/API/Title/${api.apikey3}/${route.params.id}`
+          `https://imdb-api.com/en/API/Title/${api.apikey4}/${route.params.id}`
         )
         .then((data) => {
           actors.value = data.data.actorList;
@@ -104,7 +123,7 @@ export default {
     onMounted(() => {
       axios
         .get(
-          `https://imdb-api.com/en/API/Title/${api.apikey3}/${route.params.id}`
+          `https://imdb-api.com/en/API/Title/${api.apikey4}/${route.params.id}`
         )
         .then((data) => {
           similars.value = data.data.similars;
@@ -128,7 +147,7 @@ export default {
   /* align-items: center; */
   height: 800px;
   padding-right: 20px;
-  margin-bottom: 100px;
+  margin-bottom: 20px;
   margin-top: 100px;
   background: linear-gradient(
     to bottom right,
@@ -146,7 +165,7 @@ iframe {
   font-weight: 500;
 }
 .content {
-  margin-top: 40px;
+  margin-top: -40px;
   text-shadow: 2px 2px 10px gray;
 }
 .actor-list {
@@ -163,7 +182,7 @@ iframe {
 }
 h2 {
   margin-bottom: 30px;
-  margin-top: 20px;
+  margin-top: 100px;
 }
 .similar-list {
   display: flex;
@@ -172,7 +191,7 @@ h2 {
 .similar-item {
   margin: 3px;
 }
-.poster>img {
+.poster > img {
   width: 250px;
   height: 380px;
 }
@@ -190,4 +209,13 @@ h2 {
   color: rgb(7, 35, 161);
   text-decoration: underline;
 }
+.video > img {
+  width: 855px;
+  height: 800px;
+  object-fit: cover;
+  margin-right: 50px;
+}
+/* .plot {
+  font-size: 10px;
+} */
 </style>
