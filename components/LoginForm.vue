@@ -1,15 +1,27 @@
 <template>
+  <web-header />
   <div class="login">
     <h1>Đăng Nhập</h1>
     <div class="components">
       <div class="component-item">
-        <input type="text" name="" id="email" placeholder="Email đăng nhập" v-model="email" />
+        <input
+          type="text"
+          name=""
+          id="email"
+          placeholder="Email đăng nhập"
+          v-model="email"
+        />
         <span v-if="v$.email.$error">
           {{ v$.email.$errors[0].$message }}
         </span>
       </div>
       <div class="component-item">
-        <input type="password" id="password" placeholder="Mật khẩu" v-model="password" />
+        <input
+          type="password"
+          id="password"
+          placeholder="Mật khẩu"
+          v-model="password"
+        />
         <span v-if="v$.password.$error">
           {{ v$.password.$errors[0].$message }}
         </span>
@@ -22,7 +34,8 @@
       </div>
     </div>
   </div>
-    <!-- <facebook-login class="button"
+  <web-footer />
+  <!-- <facebook-login class="button"
       appId="326022817735322"
       @login="getUserData"
       @logout="onLogout"
@@ -31,14 +44,16 @@
 </template>
 
 <script>
-
 // import facebookLogin from 'facebook-login-vuejs';
 import useValidate from "@vuelidate/core";
-import { required, email, minLength, } from "@vuelidate/validators";
+import { required, email, minLength } from "@vuelidate/validators";
+import WebHeader from "./WebHeader.vue";
+import WebFooter from "./WebFooter.vue";
 export default {
-  // components: {
-  //   facebookLogin
-  // },
+  components: {
+    WebHeader,
+    WebFooter,
+  },
   // methods: {
   //   getUserData() {
   //     this.FB.api('/me', 'GET', { fields: 'id,name,email' },
@@ -62,21 +77,21 @@ export default {
   //     this.isConnected = false;
   //   }
   // }
-  data () {
+  data() {
     return {
-      v$:useValidate(),
-      email:'',
-      password:''
-    }
+      v$: useValidate(),
+      email: "",
+      password: "",
+    };
   },
-  validations(){
+  validations() {
     return {
-      email: {required, email},
-        password:{
-          required, 
-          minLength: minLength(6), 
-        },
-    }
+      email: { required, email },
+      password: {
+        required,
+        minLength: minLength(6),
+      },
+    };
   },
   methods: {
     submitForm(event) {
@@ -100,6 +115,7 @@ label {
   border: none;
   border-radius: 10px;
   margin: 0 auto;
+  margin-top: 100px;
   background: linear-gradient(to bottom right, rgb(223, 119, 209), #1cd1d1);
 }
 .login input {
@@ -152,5 +168,3 @@ span {
   color: rgb(204, 34, 34);
 }
 </style>
-
-
