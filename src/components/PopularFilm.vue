@@ -38,7 +38,7 @@ export default {
   methods: {
     getData() {
       axios
-        .get(`https://imdb-api.com/en/API/MostPopularMovies/${api.apikey4}`)
+        .get(`https://imdb-api.com/en/API/MostPopularMovies/${api.apikey2}`)
         .then((data) => {
           this.movies = data.data.items;
         });

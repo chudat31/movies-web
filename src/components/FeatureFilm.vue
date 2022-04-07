@@ -34,7 +34,7 @@ export default {
   methods: {
     getData() {
       axios
-        .get(`https://imdb-api.com/API/AdvancedSearch/${api.apikey4}/?title_type=feature`)
+        .get(`https://imdb-api.com/API/AdvancedSearch/${api.apikey2}/?title_type=feature`)
         .then((data) => {
           this.movies=data.data.results
         });
