@@ -15,15 +15,15 @@
     </form>
     <span><i>Phim có từ khóa <strong>{{ search }}</strong></i></span>
     <div class="movies-list">
-      <div class="movie" v-for="movie in movies" :key="movie.imdbID">
-        <router-link :to="'/movie/' + movie.imdbID" class="movie-link">
-          <div v-if="movie.Poster!=='N/A'" class="poster">
-            <img :src="movie.Poster" alt="Movie Poster" />
-            <p class="type"><strong>{{ movie.Type }}</strong></p>
+      <div class="movie" v-for="movie in movies" :key="movie.id">
+        <router-link :to="'/movie/' + movie.id" class="movie-link">
+          <div v-if="movie.image" class="poster">
+            <img :src="movie.image" alt="Movie Poster" />
+            <!-- <p class="type"><strong>{{ movie.Type }}</strong></p> -->
           </div>
-          <div v-if="movie.Poster!=='N/A'" class="detail">
-            <p>{{ movie.Title }}</p>
-            <p><strong>Năm Phát Hành: </strong> {{ movie.Year }}</p>
+          <div v-if="movie.image" class="detail">
+            <p>{{ movie.title }}</p>
+            <p><strong>Năm Phát Hành: </strong> {{ movie.description }}</p>
           </div>
         </router-link>
       </div>
@@ -51,9 +51,10 @@ export default {
   methods: {
     getData() {
       axios
-        .get(`http://www.omdbapi.com/?apikey=${api.apikey1}&s=${this.search}`)
+        .get(`https://imdb-api.com/en/API/SearchMovie/${api.apikey2}/${this.search}`)
         .then((data) => {
-          this.movies = data.data.Search;         
+          console.log(data);
+          this.movies = data.data.results;         
         });
     },
   },
