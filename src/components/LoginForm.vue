@@ -30,6 +30,23 @@
       <div class="component-item" id="btn">
         <button @click="login" type="submit">Đăng nhập</button>
       </div>
+      <div class="component-item" id="btn1">
+        <button id="fb" @click="fbLogin" type="submit">
+          Đăng nhập với Facebook
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-facebook"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"
+            />
+          </svg>
+        </button>
+      </div>
       <div class="change-route">
         <span>Bạn chưa có tài khoản?</span>
         <span><router-link to="/signup">Đăng Ký</router-link></span>
@@ -40,14 +57,18 @@
 </template>
 
 <script>
-
 import useValidate from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
-import { computed, reactive, ref} from 'vue'
+import { computed, reactive, ref } from "vue";
 // import WebHeader from "./WebHeader.vue";
 import WebFooter from "./WebFooter.vue";
-import {getAuth, signInWithEmailAndPassword} from 'firebase/auth'
-import router from '@/router';
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  FacebookAuthProvider,
+} from "firebase/auth";
+import router from "@/router";
 export default {
   components: {
     WebFooter,
@@ -57,32 +78,40 @@ export default {
       email: "",
       password: {
         password: "",
-      }
-    })
+      },
+    });
+    const auth = getAuth();
+    const provider = new FacebookAuthProvider();
+    auth.languageCode = "it";
     const errMsg = ref();
+    const fbLogin = () => {
+      signInWithPopup(auth, provider).then(() => {
+        router.push("/")
+      });
+    };
 
     const login = () => {
-      signInWithEmailAndPassword(getAuth(), state.email, state.password)
-      .then(() => {     
-        router.push("/");
-      })
-      .catch((error) => {
-        switch(error.code) {
-          case "auth/invalid-email" :
-            errMsg.value = "Invalid email";
-            break;
-          case "auth/user-not-found" :
-            errMsg.value = "No account with that email was found";
-            break;
-          case "auth/wrong-password" :
-            errMsg.value = "Incorrect password";
-            break;
-          default:
-            errMsg.value = "Email or password was incorrect"
-            break;
-        }
-      })
-    }
+      signInWithEmailAndPassword(auth, state.email, state.password)
+        .then(() => {
+          router.push("/");
+        })
+        .catch((error) => {
+          switch (error.code) {
+            case "auth/invalid-email":
+              errMsg.value = "Invalid email";
+              break;
+            case "auth/user-not-found":
+              errMsg.value = "No account with that email was found";
+              break;
+            case "auth/wrong-password":
+              errMsg.value = "Incorrect password";
+              break;
+            default:
+              errMsg.value = "Email or password was incorrect";
+              break;
+          }
+        });
+    };
 
     const rules = computed(() => {
       return {
@@ -90,17 +119,18 @@ export default {
         password: {
           password: required,
           minLength: minLength(6),
-        }
-      }
-    })
+        },
+      };
+    });
 
-    const v$ = useValidate(rules, state)
+    const v$ = useValidate(rules, state);
     return {
       state,
       v$,
       login,
-      errMsg
-    }
+      fbLogin,
+      errMsg,
+    };
   },
   methods: {
     submitForm() {
@@ -137,9 +167,6 @@ label {
   border-radius: 5px;
   border: none;
 }
-.login button:hover {
-  background-color: rgb(58, 190, 58);
-}
 #btn {
   padding-top: 20px;
   padding-bottom: 40px;
@@ -150,10 +177,9 @@ label {
   width: 460px;
   height: 50px;
   color: #fff;
-  background-color: rgb(51, 72, 190);
+  background-color: rgb(26, 103, 85);
   border: none;
   border-radius: 5px;
-  transition: 0.5s;
 }
 .login h1 {
   color: #000;
@@ -174,9 +200,18 @@ label {
   color: rgb(180, 32, 32);
 }
 p {
-   color: rgb(180, 32, 32);
-   text-align: center;
-   text-transform: uppercase;
-   font-weight: 500;
+  color: rgb(180, 32, 32);
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+#fb {
+  width: 300px;
+  background-color: rgb(64, 64, 188);
+}
+#btn1 {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
 }
 </style>
