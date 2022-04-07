@@ -96,7 +96,7 @@ export default {
       )
         .then(() => {
           updateProfile(getAuth().currentUser, { displayName: state.username });
-          router.push("/login");   
+          router.push("/");   
         })
         .catch((error) => {
           alert(error);

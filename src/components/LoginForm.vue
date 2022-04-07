@@ -86,14 +86,14 @@ export default {
     const errMsg = ref();
     const fbLogin = () => {
       signInWithPopup(auth, provider).then(() => {
-        router.push("/")
+        router.push("/landingpage")
       });
     };
 
     const login = () => {
       signInWithEmailAndPassword(auth, state.email, state.password)
         .then(() => {
-          router.push("/");
+          router.push("/landingpage");
         })
         .catch((error) => {
           switch (error.code) {

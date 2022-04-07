@@ -40,7 +40,7 @@
         </div>
         <div>
           <button v-if="!isLoggedIn" class="btn btn-primary">
-            <router-link to="/login">Đăng nhập</router-link>
+            <router-link to="/">Đăng nhập</router-link>
           </button>
         </div>
         <div v-if="isLoggedIn">
@@ -175,7 +175,7 @@ export default {
     });
     const handleSignOut = () => {
       signOut(auth).then(() => {
-        router.push("/login");
+        router.push("/");
       });
     };
     return {
