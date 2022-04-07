@@ -54,7 +54,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark">
       <div class="container-fluid">
-        <router-link to="/" class="navbar-brand">Trang Chủ</router-link>
+        <router-link to="/landingpage" class="navbar-brand">Trang Chủ</router-link>
         <button
           class="navbar-toggler"
           type="button"
@@ -214,6 +214,7 @@ header {
   margin-bottom: 20px;
   color: #fff;
   background-image: url("https://cdnimg.vietnamplus.vn/uploaded/izhsr/2015_05_11/ndldleafray5vu9hot9m_211ox9s.jpg");
+  opacity: 0.9;
   background-position: center;
   background-size: 1520px 500px;
   background-repeat: no-repeat;

@@ -39,7 +39,7 @@
           {{ v$.password.password.$errors[0].$message }}
         </span>
       </div>
-      <div class="component-item">
+      <!-- <div class="component-item">
         <input
           type="password"
           name=""
@@ -50,7 +50,7 @@
         <span v-if="v$.password.checkPassword.$error">
           {{ v$.password.checkPassword.$errors[0].$message }}
         </span>
-      </div>
+      </div> -->
       <div class="component-item" id="btn">
         <button @click="register" type="submit">Đăng ký</button>
       </div>
@@ -66,59 +66,60 @@
 <script>
 import useValidate from "@vuelidate/core";
 // import WebHeader from './WebHeader.vue'
-import WebFooter from './WebFooter.vue'
+import WebFooter from "./WebFooter.vue";
+import { required, email, minLength, } from "@vuelidate/validators";
+import { computed, reactive } from "vue";
 import {
-  required,
-  email,
-  minLength,
-  sameAs,
-} from "@vuelidate/validators";
-import { computed, reactive, } from 'vue'
-import {getAuth, createUserWithEmailAndPassword, updateProfile} from 'firebase/auth'
-import router from '@/router';
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import router from "@/router";
 export default {
-  name: 'SignUp',
-  components: {WebFooter},
+  name: "SignUp",
+  components: { WebFooter },
   setup() {
-
     const state = reactive({
       email: "",
       username: "",
       password: {
         password: "",
-        checkPassword: "",
-      }
-    })
+        // checkPassword: "",
+      },
+    });
+
     const register = () => {
-      createUserWithEmailAndPassword(getAuth(), state.email, state.password.password)
-      .then((data) => {
-        updateProfile(getAuth().currentUser, {displayName: state.username})
-        console.log(data.user);
-        router.push("/login")
-      })
-      .catch((error)=>{
-        alert(error)
-      })
-    }
+      createUserWithEmailAndPassword(
+        getAuth(),
+        state.email,
+        state.password.password
+      )
+        .then(() => {
+          updateProfile(getAuth().currentUser, { displayName: state.username });
+          router.push("/login");   
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    };
 
     const rules = computed(() => {
       return {
         email: { required, email },
-        username: {required},
+        username: { required },
         password: {
-          password: { required,
-          minLength: minLength(6)},
-          checkPassword: { required, sameAs: sameAs(state.password.password) },
-        }
-      }
-    })
+          password: { required, minLength: minLength(6) },
+          // checkPassword: { required, sameAs: sameAs(state.password.password) },
+        },
+      };
+    });
 
-    const v$ = useValidate(rules, state)
+    const v$ = useValidate(rules, state);
     return {
       state,
       v$,
-      register
-    }
+      register,
+    };
   },
   methods: {
     submitForm() {

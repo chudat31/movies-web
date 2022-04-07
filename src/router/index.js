@@ -12,19 +12,19 @@ import HorrorFilter from '../components/HorrorFilter.vue';
 import FeatureFilm from '../components/FeatureFilm.vue';
 import TvMovies from '../components/TvMovies.vue';
 import PageNotFound from '../components/PageNotFound.vue';
-import { getAuth } from 'firebase/auth'
+// import { getAuth } from 'firebase/auth'
 
 const routes = [{
         path: '/signup',
         component: SignUp
     },
     {
-        path: '/login',
+        path: '/',
         component: LoginForm,
 
     },
     {
-        path: '/',
+        path: '/landingpage',
         component: LandingPage,
 
 
@@ -36,9 +36,9 @@ const routes = [{
     {
         path: '/search',
         component: FilmSearch,
-        meta: {
-            requiresAuth: true
-        }
+        // meta: {
+        //     requiresAuth: true
+        // }
     },
     {
         path: '/popularity',
@@ -80,17 +80,16 @@ const router = createRouter({
 })
 
 
-router.beforeEach((to, _from, next) => {
-    if (to.matched.some((record) => record.meta.requiresAuth)) {
-        if (getAuth().currentUser) {
-            next();
-        } else {
-            console.log("Something error. You can't have access");
-            next("/");
-        }
-    } else {
-        next();
-    }
-});
+// router.beforeEach((to, _from, next) => {
+//     if (to.matched.some((record) => record.meta.requiresAuth)) {
+//         if (getAuth().currentUser) {
+//             next();
+//         } else {
+//             next("/");
+//         }
+//     } else {
+//         next();
+//     }
+// });
 
 export default router
