@@ -1,5 +1,5 @@
 <template>
-  <web-header />
+  <!-- <web-header /> -->
   <div class="signup">
     <h1>Đăng Ký</h1>
     <form @submit.prevent="submitForm" class="components">
@@ -65,21 +65,20 @@
 
 <script>
 import useValidate from "@vuelidate/core";
-import WebHeader from './WebHeader.vue'
+// import WebHeader from './WebHeader.vue'
 import WebFooter from './WebFooter.vue'
 import {
   required,
   email,
   minLength,
   sameAs,
-  helpers,
 } from "@vuelidate/validators";
 import { computed, reactive, } from 'vue'
-import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth'
+import {getAuth, createUserWithEmailAndPassword, updateProfile} from 'firebase/auth'
 import router from '@/router';
 export default {
   name: 'SignUp',
-  components: {WebHeader, WebFooter},
+  components: {WebFooter},
   setup() {
 
     const state = reactive({
@@ -93,17 +92,14 @@ export default {
     const register = () => {
       createUserWithEmailAndPassword(getAuth(), state.email, state.password.password)
       .then((data) => {
-        alert("Successfully registered")
-        data.user.displayName = state.username;
+        updateProfile(getAuth().currentUser, {displayName: state.username})
         console.log(data.user);
         router.push("/login")
       })
       .catch((error)=>{
-        alert(`Something error: ${error} `)
+        alert(error)
       })
     }
-
-    const mustHave = (value) => value.includes("@") || value.includes(".")
 
     const rules = computed(() => {
       return {
@@ -111,10 +107,7 @@ export default {
         username: {required},
         password: {
           password: { required,
-          minLength: minLength(6),
-          mustHave: helpers.withMessage(
-            "Your password must include special character(@,.)",
-            mustHave )},
+          minLength: minLength(6)},
           checkPassword: { required, sameAs: sameAs(state.password.password) },
         }
       }

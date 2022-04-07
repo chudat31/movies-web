@@ -29,12 +29,12 @@
       <p>
         <strong><i>Genre: </i></strong>{{ movie.genres }}
       </p>
-      <p>
+      <!-- <p>
         <strong><i>Companies Production: </i></strong> {{ movie.companies }}
       </p>
       <p>
         <strong><i>Directors: </i></strong> {{ movie.directors }}
-      </p>
+      </p> -->
       <p>
         <strong><i>Runtime: </i></strong> {{ movie.runtimeStr }}
       </p>

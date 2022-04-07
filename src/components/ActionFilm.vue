@@ -70,6 +70,7 @@ h2 {
   background-color: rgb(21, 133, 99);
   color: #fff;
   width: 250px;
+  height: 100px;
   display: none;
   position: absolute;
   left: 0;

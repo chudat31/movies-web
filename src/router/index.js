@@ -21,13 +21,13 @@ const routes = [{
     {
         path: '/login',
         component: LoginForm,
+
     },
     {
         path: '/',
         component: LandingPage,
-        meta: {
-            requiresAuth: true
-        }
+
+
     },
     {
         path: '/movie/:id',
@@ -36,7 +36,9 @@ const routes = [{
     {
         path: '/search',
         component: FilmSearch,
-
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/popularity',

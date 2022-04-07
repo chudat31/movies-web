@@ -43,9 +43,10 @@
             <router-link to="/login">Đăng nhập</router-link>
           </button>
         </div>
-        <div>
-          <button v-if="isLoggedIn" @click="handleSignOut()" class="btn btn-warning">
-             Đăng Xuất
+        <div v-if="isLoggedIn">
+          <p>Welcome, <span><i>{{username}}</i></span></p>
+          <button @click="handleSignOut()" class="btn btn-warning">
+            Đăng Xuất
           </button>
         </div>
       </div>
@@ -150,36 +151,39 @@
   </header>
 </template>
 <script>
-import {onMounted, ref} from 'vue';
-import {getAuth, onAuthStateChanged, signOut} from 'firebase/auth'
-import {useRouter} from 'vue-router'
+import { onMounted, ref } from "vue";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { useRouter } from "vue-router";
 export default {
   name: "WebHeader",
   setup() {
     const isLoggedIn = ref(false);
+    const username = ref("");
     const router = useRouter();
-    let auth;
-    onMounted(()=>{
+    let auth
+    onMounted(() => {
       auth = getAuth();
       onAuthStateChanged(auth, (user) => {
-        if(user) {
+        if (user) {
           isLoggedIn.value = true;
-        }
-        else {
+          username.value = user.displayName;
+          // console.log(user);
+        } else {
           isLoggedIn.value = false;
         }
-      })
-    })
+      });
+    });
     const handleSignOut = () => {
-      signOut(auth).then(()=> {
-        router.push("/");
-      })
-    }
+      signOut(auth).then(() => {
+        router.push("/login");
+      });
+    };
     return {
-      handleSignOut
-    }
-
-  }
+      handleSignOut,
+      isLoggedIn,
+      username
+    };
+  },
 };
 </script>
 
@@ -208,7 +212,7 @@ export default {
 }
 header {
   margin-bottom: 20px;
-  color:#fff;
+  color: #fff;
   background-image: url("https://cdnimg.vietnamplus.vn/uploaded/izhsr/2015_05_11/ndldleafray5vu9hot9m_211ox9s.jpg");
   background-position: center;
   background-size: 1520px 500px;
@@ -275,5 +279,11 @@ img {
 .search-btn {
   color: #f4f4f4;
   text-decoration: none;
+}
+p {
+  font-size: 20px;
+}
+span {
+  color: yellow;
 }
 </style>

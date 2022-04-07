@@ -1,5 +1,5 @@
 <template>
-  <web-header />
+  <!-- <web-header /> -->
   <div class="login">
     <h1>Đăng Nhập</h1>
     <form @submit.prevent="submitForm" class="components">
@@ -44,13 +44,12 @@
 import useValidate from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
 import { computed, reactive, ref} from 'vue'
-import WebHeader from "./WebHeader.vue";
+// import WebHeader from "./WebHeader.vue";
 import WebFooter from "./WebFooter.vue";
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth'
 import router from '@/router';
 export default {
   components: {
-    WebHeader,
     WebFooter,
   },
   setup() {
@@ -64,9 +63,8 @@ export default {
 
     const login = () => {
       signInWithEmailAndPassword(getAuth(), state.email, state.password)
-      .then(() => {
-        alert("Login Succesfully");
-        router.push("/search");
+      .then(() => {     
+        router.push("/");
       })
       .catch((error) => {
         switch(error.code) {

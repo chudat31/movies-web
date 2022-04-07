@@ -129,6 +129,7 @@ nav {
 }
 img {
   height: 500px;
+  object-fit: cover;
 }
 .body {
   margin-top: 40px;
