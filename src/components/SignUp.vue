@@ -4,7 +4,6 @@
     <h1>Đăng Ký</h1>
     <form @submit.prevent="submitForm" class="components">
       <div class="component-item">
-        <!-- <label for="email">Email đăng ký: </label> -->
         <input
           type="email"
           name=""
@@ -39,18 +38,15 @@
           {{ v$.password.password.$errors[0].$message }}
         </span>
       </div>
-      <!-- <div class="component-item">
+      <div class="component-item">
         <input
-          type="password"
+          type="text"
           name=""
-          id="passwordAgain"
-          placeholder="Nhập lại mật khẩu"
-          v-model="state.password.checkPassword"
+          id="img"
+          placeholder="Ảnh đại diện"
+          v-model="state.imageSrc"
         />
-        <span v-if="v$.password.checkPassword.$error">
-          {{ v$.password.checkPassword.$errors[0].$message }}
-        </span>
-      </div> -->
+      </div>
       <div class="component-item" id="btn">
         <button @click="register" type="submit">Đăng ký</button>
       </div>
@@ -81,10 +77,10 @@ export default {
   setup() {
     const state = reactive({
       email: "",
+      imageSrc: "",
       username: "",
       password: {
         password: "",
-        // checkPassword: "",
       },
     });
 
@@ -94,8 +90,9 @@ export default {
         state.email,
         state.password.password
       )
-        .then(() => {
-          updateProfile(getAuth().currentUser, { displayName: state.username });
+        .then((data) => {
+          updateProfile(getAuth().currentUser, { displayName: state.username, photoURL: state.imageSrc });
+          console.log(data);
           router.push("/");   
         })
         .catch((error) => {
@@ -109,7 +106,7 @@ export default {
         username: { required },
         password: {
           password: { required, minLength: minLength(6) },
-          // checkPassword: { required, sameAs: sameAs(state.password.password) },
+          // phoneNumber: { required },
         },
       };
     });

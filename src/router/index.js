@@ -12,6 +12,8 @@ import HorrorFilter from '../components/HorrorFilter.vue';
 import FeatureFilm from '../components/FeatureFilm.vue';
 import TvMovies from '../components/TvMovies.vue';
 import PageNotFound from '../components/PageNotFound.vue';
+import UserProfile from '../components/UserProfile.vue';
+
 // import { getAuth } from 'firebase/auth'
 
 const routes = [{
@@ -22,6 +24,10 @@ const routes = [{
         path: '/',
         component: LoginForm,
 
+    },
+    {
+        path: '/user/:id',
+        component: UserProfile,
     },
     {
         path: '/landingpage',

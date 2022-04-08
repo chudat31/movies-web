@@ -37,7 +37,7 @@ export default {
     getData() {
       axios
         .get(
-          `https://imdb-api.com/API/AdvancedSearch/${api.apikey2}/?genres=horror`
+          `https://imdb-api.com/API/AdvancedSearch/${api.apikey3}/?genres=horror`
         )
         .then((data) => {
           this.movies = data.data.results;

@@ -17,9 +17,6 @@
       <p>
         <strong><i>Released: </i></strong>{{ movie.releaseDate }}
       </p>
-      <p class="plot">
-        <strong> <i>Plot: </i> </strong>{{ movie.plot }}
-      </p>
       <p>
         <strong><i>Actors: </i></strong>{{ movie.stars }}
       </p>
@@ -59,6 +56,9 @@
   </div>
   <p>
     <strong><i>Keywords: </i></strong> {{ movie.keywords }}
+  </p>
+  <p class="plot">
+    <strong> <i>Plot: </i> </strong>{{ movie.plot }}
   </p>
   <h2>DIỄN VIÊN</h2>
   <div class="actor-list">
@@ -160,9 +160,9 @@ export default {
 <style scoped>
 .movie-detail {
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   /* align-items: center; */
-  height: 800px;
+  height: 500px;
   padding-right: 20px;
   margin-bottom: 20px;
   margin-top: 100px;
@@ -173,9 +173,8 @@ export default {
   );
 }
 iframe {
-  width: 855px;
-  height: 800px;
-  object-fit: cover;
+  width: 755px;
+  height: 500px;
   margin-right: 50px;
 }
 .content p {
@@ -225,12 +224,6 @@ h2 {
 .content strong {
   color: rgb(7, 35, 161);
   text-decoration: underline;
-}
-.video > img {
-  width: 855px;
-  height: 800px;
-  object-fit: cover;
-  margin-right: 50px;
 }
 .content button {
   margin-top: 20px;

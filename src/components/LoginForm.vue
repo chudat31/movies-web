@@ -92,7 +92,8 @@ export default {
 
     const login = () => {
       signInWithEmailAndPassword(auth, state.email, state.password)
-        .then(() => {
+        .then((data) => {
+          console.log(data);
           router.push("/landingpage");
         })
         .catch((error) => {

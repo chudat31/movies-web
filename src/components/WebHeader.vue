@@ -52,17 +52,14 @@
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              Welcome,
+             Welcome,
               <span
-                ><i>{{ username }}</i></span
-              >
+                ><i>{{ username }}</i></span>
+              <img id="avatar" :src="userImg" alt="">
             </div>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <div>
-                <button @click="handleSignOut()" class="btn btn-warning btn-sm">
-                  Đăng Xuất
-                </button>
-              </div>
+              <div id="profile"><router-link id="route" :to="'/user/' + userID ">Thông tin cá nhân</router-link> </div>
+              <div id="signout" @click="handleSignOut()">Đăng Xuất</div>
             </div>
           </div>
         </div>
@@ -178,6 +175,8 @@ export default {
   setup() {
     const isLoggedIn = ref(false);
     const username = ref("");
+    const userID = ref("")
+    const userImg = ref("")
     const router = useRouter();
     let auth;
     onMounted(() => {
@@ -186,6 +185,8 @@ export default {
         if (user) {
           isLoggedIn.value = true;
           username.value = user.displayName;
+          userID.value = user.uid;
+          userImg.value = user.photoURL
           // console.log(user);
         } else {
           isLoggedIn.value = false;
@@ -201,6 +202,8 @@ export default {
       handleSignOut,
       isLoggedIn,
       username,
+      userID,
+      userImg
     };
   },
 };
@@ -301,8 +304,33 @@ img {
 }
 .active {
   font-size: 15px;
+  display: flex;
 }
 span {
+  margin-left: 5px;
   color: yellow;
+}
+#signout:hover, #route:hover {
+  color: rgb(61, 168, 132);
+}
+#signout {
+  cursor: pointer;
+  font-size: 15px;
+  margin-top: 8px;
+}
+#profile {
+  cursor: pointer;
+  font-size: 15px;
+}
+#route {
+  text-decoration: none;
+  color: black;
+}
+#avatar {
+  margin-left: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 </style>
