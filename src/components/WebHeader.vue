@@ -44,17 +44,36 @@
           </button>
         </div>
         <div v-if="isLoggedIn">
-          <p>Welcome, <span><i>{{username}}</i></span></p>
-          <button @click="handleSignOut()" class="btn btn-warning">
-            Đăng Xuất
-          </button>
+          <div class="nav-item dropdown">
+            <div
+              class="active dropdown-toggle"
+              id="navbarDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Welcome,
+              <span
+                ><i>{{ username }}</i></span
+              >
+            </div>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <div>
+                <button @click="handleSignOut()" class="btn btn-warning btn-sm">
+                  Đăng Xuất
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
     <nav class="navbar navbar-expand-lg navbar-dark">
       <div class="container-fluid">
-        <router-link to="/landingpage" class="navbar-brand">Trang Chủ</router-link>
+        <router-link to="/landingpage" class="navbar-brand"
+          >Trang Chủ</router-link
+        >
         <button
           class="navbar-toggler"
           type="button"
@@ -160,7 +179,7 @@ export default {
     const isLoggedIn = ref(false);
     const username = ref("");
     const router = useRouter();
-    let auth
+    let auth;
     onMounted(() => {
       auth = getAuth();
       onAuthStateChanged(auth, (user) => {
@@ -181,7 +200,7 @@ export default {
     return {
       handleSignOut,
       isLoggedIn,
-      username
+      username,
     };
   },
 };
@@ -280,8 +299,8 @@ img {
   color: #f4f4f4;
   text-decoration: none;
 }
-p {
-  font-size: 20px;
+.active {
+  font-size: 15px;
 }
 span {
   color: yellow;
