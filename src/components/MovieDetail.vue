@@ -110,7 +110,7 @@ export default {
     onMounted(() => {
       axios
         .get(
-          `https://imdb-api.com/en/API/Title/${api.apikey2}/${route.params.id}`
+          `https://imdb-api.com/en/API/Title/${api.apikey3}/${route.params.id}`
         )
         .then((data) => {
           movie.value = data.data;
@@ -122,7 +122,7 @@ export default {
     onMounted(() => {
       axios
         .get(
-          `https://imdb-api.com/en/API/Trailer/${api.apikey2}/${route.params.id}`
+          `https://imdb-api.com/en/API/Trailer/${api.apikey3}/${route.params.id}`
         )
         .then((data) => {
           video.value = data.data;
@@ -131,7 +131,7 @@ export default {
     onMounted(() => {
       axios
         .get(
-          `https://imdb-api.com/en/API/Title/${api.apikey2}/${route.params.id}`
+          `https://imdb-api.com/en/API/Title/${api.apikey3}/${route.params.id}`
         )
         .then((data) => {
           actors.value = data.data.actorList;
@@ -140,7 +140,7 @@ export default {
     onMounted(() => {
       axios
         .get(
-          `https://imdb-api.com/en/API/Title/${api.apikey2}/${route.params.id}`
+          `https://imdb-api.com/en/API/Title/${api.apikey3}/${route.params.id}`
         )
         .then((data) => {
           similars.value = data.data.similars;
