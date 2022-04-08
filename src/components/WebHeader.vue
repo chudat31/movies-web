@@ -46,7 +46,7 @@
         <div v-if="isLoggedIn">
           <div class="nav-item dropdown">
             <div
-              class="active dropdown-toggle"
+              class="active info dropdown-toggle"
               id="navbarDropdown"
               role="button"
               data-bs-toggle="dropdown"
@@ -302,7 +302,7 @@ img {
   color: #f4f4f4;
   text-decoration: none;
 }
-.active {
+.info {
   font-size: 15px;
   display: flex;
 }
