@@ -38,7 +38,7 @@
           {{ v$.password.password.$errors[0].$message }}
         </span>
       </div>
-      <div class="component-item">
+      <!-- <div class="component-item">
         <input
           type="text"
           name=""
@@ -46,7 +46,7 @@
           placeholder="Ảnh đại diện"
           v-model="state.imageSrc"
         />
-      </div>
+      </div> -->
       <div class="component-item" id="btn">
         <button @click="register" type="submit">Đăng ký</button>
       </div>
@@ -63,13 +63,14 @@
 import useValidate from "@vuelidate/core";
 // import WebHeader from './WebHeader.vue'
 import WebFooter from "./WebFooter.vue";
-import { required, email, minLength, } from "@vuelidate/validators";
+import { required, email, minLength } from "@vuelidate/validators";
 import { computed, reactive } from "vue";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
+
 import router from "@/router";
 export default {
   name: "SignUp",
@@ -77,13 +78,12 @@ export default {
   setup() {
     const state = reactive({
       email: "",
-      imageSrc: "",
       username: "",
       password: {
         password: "",
       },
-    });
-
+    }); 
+    // SIGN-UP
     const register = () => {
       createUserWithEmailAndPassword(
         getAuth(),
@@ -91,27 +91,30 @@ export default {
         state.password.password
       )
         .then((data) => {
-          updateProfile(getAuth().currentUser, { displayName: state.username, photoURL: state.imageSrc });
+          updateProfile(getAuth().currentUser, {
+            displayName: state.username,
+          });
           console.log(data);
-          router.push("/");   
+          router.push("/");
         })
         .catch((error) => {
           alert(error);
         });
     };
 
+    // CHECK VALIDATION FORM
     const rules = computed(() => {
       return {
         email: { required, email },
         username: { required },
         password: {
           password: { required, minLength: minLength(6) },
-          // phoneNumber: { required },
         },
       };
     });
 
     const v$ = useValidate(rules, state);
+    //
     return {
       state,
       v$,

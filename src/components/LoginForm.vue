@@ -80,16 +80,21 @@ export default {
         password: "",
       },
     });
+
+    //LOGIN FACEBOOK
     const auth = getAuth();
     const provider = new FacebookAuthProvider();
-    auth.languageCode = "it";
+    // auth.languageCode = "it";
     const errMsg = ref();
     const fbLogin = () => {
-      signInWithPopup(auth, provider).then(() => {
+      signInWithPopup(auth, provider).then((data) => {
+        console.log(data);
         router.push("/landingpage")
       });
     };
 
+
+    // LOGIN USER
     const login = () => {
       signInWithEmailAndPassword(auth, state.email, state.password)
         .then((data) => {
@@ -113,7 +118,10 @@ export default {
           }
         });
     };
+    //
 
+
+    //CHECK VALIDATION FORM
     const rules = computed(() => {
       return {
         email: { required, email },
@@ -125,6 +133,7 @@ export default {
     });
 
     const v$ = useValidate(rules, state);
+    //
     return {
       state,
       v$,

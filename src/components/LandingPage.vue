@@ -5,7 +5,7 @@
   <FantasyFilm />
   <HorrorFilm />
   <WebFooter />
-  <div class="theme">
+  <!-- <div class="theme">
     <iframe
       src="https://www.nhaccuatui.com/mh/auto/uCLJlIwjFJWt"
       width="1"
@@ -13,7 +13,7 @@
       allowfullscreen
       allow="autoplay"
     ></iframe>
-  </div>
+  </div> -->
 </template>
 
 <script>
