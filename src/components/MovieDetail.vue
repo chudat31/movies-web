@@ -162,7 +162,7 @@ export default {
   display: flex;
   /* justify-content: center; */
   /* align-items: center; */
-  height: 500px;
+  height: 550px;
   padding-right: 20px;
   margin-bottom: 20px;
   margin-top: 100px;
@@ -174,7 +174,7 @@ export default {
 }
 iframe {
   width: 755px;
-  height: 500px;
+  height: 550px;
   margin-right: 50px;
 }
 .content p {
