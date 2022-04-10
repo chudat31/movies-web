@@ -127,7 +127,7 @@ h1 {
 div {
   display: flex;
   justify-content: center;
-  margin-top: 50px;
+  margin-top: 30px;
 }
 article {
   margin-left: 30px;
