@@ -195,7 +195,7 @@ export default {
     });
     const handleSignOut = () => {
       signOut(auth).then(() => {
-        router.push("/");
+        router.push("/login");
       });
     };
     return {
