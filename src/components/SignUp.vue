@@ -52,7 +52,7 @@
       </div>
       <div class="change-route">
         <span>Bạn đã có tài khoản?</span>
-        <span><router-link to="/">Đăng Nhập</router-link></span>
+        <span><router-link to="/login">Đăng Nhập</router-link></span>
       </div>
     </form>
   </div>
