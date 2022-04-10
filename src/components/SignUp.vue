@@ -95,7 +95,7 @@ export default {
             displayName: state.username,
           });
           console.log(data);
-          router.push("/");
+          router.push("/login");
         })
         .catch((error) => {
           alert(error);

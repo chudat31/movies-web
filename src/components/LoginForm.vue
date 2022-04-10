@@ -90,7 +90,7 @@ export default {
     const fbLogin = () => {
       signInWithPopup(auth, provider).then((data) => {
         console.log(data);
-        router.push("/landingpage")
+        router.push("/")
       });
     };
 
@@ -100,7 +100,7 @@ export default {
       signInWithEmailAndPassword(auth, state.email, state.password)
         .then((data) => {
           console.log(data);
-          router.push("/landingpage");
+          router.push("/");
         })
         .catch((error) => {
           switch (error.code) {
