@@ -22,7 +22,7 @@ const routes = [{
     },
     {
         path: '/',
-        component: LoginForm,
+        component: LandingPage,
 
     },
     {
@@ -30,8 +30,8 @@ const routes = [{
         component: UserProfile,
     },
     {
-        path: '/landingpage',
-        component: LandingPage,
+        path: '/login',
+        component: LoginForm,
 
 
     },
