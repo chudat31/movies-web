@@ -58,7 +58,7 @@
               <img id="avatar" :src="userImg" alt="">
             </div>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <div id="profile"><router-link id="route" :to="'/user/' + userID ">Thông tin cá nhân</router-link> </div>
+              <div id="profile"><router-link id="route" :to="'/user/' + userID ">Thông Tin Cá Nhân</router-link> </div>
               <div id="signout" @click="handleSignOut()">Đăng Xuất</div>
             </div>
           </div>
