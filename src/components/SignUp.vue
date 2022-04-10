@@ -1,5 +1,5 @@
 <template>
-  <web-header />
+  <!-- <web-header /> -->
   <div class="signup">
     <h1>Đăng Ký</h1>
     <form @submit.prevent="submitForm" class="components">
@@ -61,7 +61,7 @@
 
 <script>
 import useValidate from "@vuelidate/core";
-import WebHeader from './WebHeader.vue'
+// import WebHeader from './WebHeader.vue'
 import WebFooter from "./WebFooter.vue";
 import { required, email, minLength } from "@vuelidate/validators";
 import { computed, reactive } from "vue";
@@ -74,7 +74,7 @@ import {
 import router from "@/router";
 export default {
   name: "SignUp",
-  components: { WebFooter, WebHeader },
+  components: { WebFooter },
   setup() {
     const state = reactive({
       email: "",

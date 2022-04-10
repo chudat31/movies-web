@@ -40,7 +40,7 @@
         </div>
         <div>
           <button v-if="!isLoggedIn" class="btn btn-primary">
-            <router-link to="/">Đăng nhập</router-link>
+            <router-link to="/login">Đăng nhập</router-link>
           </button>
         </div>
         <div v-if="isLoggedIn">
@@ -68,7 +68,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark">
       <div class="container-fluid">
-        <router-link to="/landingpage" class="navbar-brand"
+        <router-link to="/" class="navbar-brand"
           >Trang Chủ</router-link
         >
         <button
