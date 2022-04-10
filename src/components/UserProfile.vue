@@ -41,7 +41,7 @@ export default {
       lastDaySignIn: "",
       userImg: "",
     });
-    const currentUser = getAuth().currentUser;
+    
     const storage = getStorage();
     const database = getDatabase();
     const databaseRef = dbRef(database);
@@ -60,7 +60,7 @@ export default {
         getDownloadURL(fileRef)
         .then((url)=>{
           console.log(url);
-          updateProfile(currentUser, {photoURL: url});
+          updateProfile(getAuth().currentUser, {photoURL: url});
         })
         
       }
