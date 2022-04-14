@@ -94,7 +94,7 @@
 <script>
 import WebHeader from "./WebHeader.vue";
 import WebFooter from "./WebFooter.vue";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
 import api from "@/api.js";
 import axios from "axios";
@@ -107,7 +107,7 @@ export default {
     const actors = ref([]);
     const similars = ref([]);
     const route = useRoute();
-    onMounted(() => {
+    const title = onMounted(() => {
       axios
         .get(
           `https://imdb-api.com/en/API/Title/${api.apikey3}/${route.params.id}`
@@ -128,7 +128,7 @@ export default {
           video.value = data.data;
         });
     });
-    onMounted(() => {
+    const actor = onMounted(() => {
       axios
         .get(
           `https://imdb-api.com/en/API/Title/${api.apikey3}/${route.params.id}`
@@ -137,7 +137,7 @@ export default {
           actors.value = data.data.actorList;
         });
     });
-    onMounted(() => {
+    const similiars = onMounted(() => {
       axios
         .get(
           `https://imdb-api.com/en/API/Title/${api.apikey3}/${route.params.id}`
@@ -146,6 +146,11 @@ export default {
           similars.value = data.data.similars;
         });
     });
+    watch(route,()=>{
+      similiars();
+      actor();
+      title();
+    })
     return {
       movie,
       getLink,
