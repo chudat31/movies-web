@@ -8,10 +8,7 @@
       <br />
       <h3>
         <i style="color: blue"
-          >Thay đổi ảnh đại diện <br /><span
-            >Hệ thống đang cải thiện, vui lòng <strong>(chọn ảnh và tải lại trang)</strong> 2 lần để có ảnh
-            </span
-          ></i
+          >Thay đổi ảnh đại diện</i
         >
       </h3>
       <div class="component-item">
@@ -24,7 +21,8 @@
           @change="onchangeFile"
         />
       </div>
-      <!-- <button @click="onclickBtn"></button> -->
+      <br>
+      <button @click="onUploadFile">Tải lên</button>
     </article>
     <article id="two">
       <p><strong>Tên đăng nhập: </strong> {{ userInfo.userName }}</p>
@@ -57,6 +55,8 @@ export default {
       dayCreate: "",
       lastDaySignIn: "",
       userImg: "",
+      fileRef: "",
+      selectedFile: null,
     });
 
     // UPLOAD FILE AND GET URL FROM STORAGE
@@ -65,34 +65,25 @@ export default {
     const databaseRef = dbRef(database);
 
     async function onchangeFile(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const fileRef = stRef(storage, file.name);
-        //UPLOAD FILE
-        uploadBytes(fileRef, file).then((data) => {
+      userInfo.selectedFile = event.target.files[0];
+      if (userInfo.selectedFile) {
+        userInfo.fileRef = stRef(storage, userInfo.selectedFile.name);
+        uploadBytes(userInfo.fileRef, userInfo.selectedFile).then((data) => {
           console.log(data);
           const newFile = push(databaseRef);
           set(newFile, {
-            name: file.name,
+            name: userInfo.selectedFile.name,
           });
-        });
-
-        //DOWNLOAD FILE
-        getDownloadURL(fileRef).then((url) => {
-          console.log(url);
-          updateProfile(getAuth().currentUser, { photoURL: url });
         });
       }
     }
-    /// function onclickBtn(event) {
-    ///  console.log(event.target);
-    ///   const fileRef = ref(storage, )
-    ///   getDownloadURL(fileRef)
-    ///     .then((url)=>{
-    ///       console.log(url);
-    ///       updateProfile(getAuth().currentUser, {photoURL: url});
-    ///     })
-    /// }
+    async function onUploadFile() {
+      //DOWNLOAD FILE
+      getDownloadURL(userInfo.fileRef).then((url) => {
+        console.log(url);
+        updateProfile(getAuth().currentUser, { photoURL: url });
+      });
+    }
 
     // NEU DANG NHAP THANH CONG LAY THONG TIN VE TAI KHOAN
     let auth;
@@ -114,7 +105,7 @@ export default {
     return {
       userInfo,
       onchangeFile,
-      // onclickBtn
+      onUploadFile,
     };
   },
 };
