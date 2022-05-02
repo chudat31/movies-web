@@ -51,6 +51,7 @@
           </svg>
           Favourite
         </button>
+        <button id="btnDel" v-if="isAdmin">Delete Film</button>
       </div>
     </div>
   </div>
@@ -98,15 +99,32 @@ import { ref, onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
 import api from "@/api.js";
 import axios from "axios";
+import {getAuth, onAuthStateChanged} from 'firebase/auth'
 export default {
   name: "MovieDetail",
   components: { WebHeader, WebFooter },
   setup() {
+    const name = ref();
+    const favourite = ref();
     const movie = ref({});
     const video = ref({});
     const actors = ref([]);
     const similars = ref([]);
+    const isAdmin = ref(false);
     const route = useRoute();
+    let auth;
+    onMounted(() => {
+      auth = getAuth();
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          if (user.email === 'admin@gmail.com') {
+            isAdmin.value = true;
+          }
+        } else {
+          return;
+        }
+      });
+    });
     const title = onMounted(() => {
       axios
         .get(
@@ -152,11 +170,14 @@ export default {
       title();
     })
     return {
+      name,
+      favourite,
       movie,
       getLink,
       video,
       actors,
       similars,
+      isAdmin
     };
   },
 };
@@ -240,6 +261,9 @@ h2 {
 }
 svg {
   margin-right: 5px;
+}
+#btnDel {
+  margin-left: 10px;
 }
 /* .plot {
   font-size: 10px;
