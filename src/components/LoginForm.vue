@@ -11,9 +11,9 @@
           placeholder="Email đăng nhập"
           v-model="state.email"
         />
-        <span v-if="v$.email.$error">
+        <!-- <span v-if="v$.email.$error">
           {{ v$.email.$errors[0].$message }}
-        </span>
+        </span> -->
       </div>
       <div class="component-item">
         <input
@@ -22,11 +22,11 @@
           placeholder="Mật khẩu"
           v-model="state.password"
         />
-        <span v-if="v$.password.$error">
+        <!-- <span v-if="v$.password.$error">
           {{ v$.password.$errors[0].$message }}
-        </span>
+        </span> -->
       </div>
-      <p v-if="errMsg">{{ errMsg }}</p>
+      <!-- <p v-if="errMsg">{{ errMsg }}</p> -->
       <div class="component-item" id="btn">
         <button @click="login" type="submit">Đăng nhập</button>
       </div>
@@ -49,7 +49,7 @@
       </div>
       <div class="change-route">
         <span>Bạn chưa có tài khoản?</span>
-        <span><router-link to="/signup">Đăng Ký</router-link></span>
+        <span><router-link id="route" to="/signup">Đăng Ký</router-link></span>
       </div>
     </form>
   </div>
@@ -57,9 +57,9 @@
 </template>
 
 <script>
-import useValidate from "@vuelidate/core";
-import { required, email, minLength } from "@vuelidate/validators";
-import { computed, reactive, ref } from "vue";
+// import useValidate from "@vuelidate/core";
+// import { required, email, minLength } from "@vuelidate/validators";
+import { onMounted, reactive, ref } from "vue";
 // import WebHeader from "./WebHeader.vue";
 import WebFooter from "./WebFooter.vue";
 import {
@@ -69,6 +69,7 @@ import {
   FacebookAuthProvider,
 } from "firebase/auth";
 import router from "@/router";
+import axios from 'axios';
 export default {
   components: {
     WebFooter,
@@ -82,24 +83,31 @@ export default {
       },
     });
 
+    //CHECK LOGIN DATA IN DATABASE
+    const checkLogin = onMounted(async()=>{
+      const result = await axios.get('')
+      if(result.status === 200 && result.data.length > 0) {
+        localStorage.setItem('user-info', JSON.stringify(result.data[0]))
+        router.push('/')
+      }
+    })
+
+
     //LOGIN FACEBOOK
     const auth = getAuth();
     const provider = new FacebookAuthProvider();
-    // auth.languageCode = "it";
     const errMsg = ref();
     const fbLogin = () => {
-      signInWithPopup(auth, provider).then((data) => {
-        console.log(data);
+      signInWithPopup(auth, provider).then(() => {
         router.push("/")
       });
     };
 
-
+    
     // LOGIN USER
     const login = () => {
       signInWithEmailAndPassword(auth, state.email, state.password)
-        .then((data) => {
-          console.log(data);
+        .then(() => {
           router.push("/");
         })
         .catch((error) => {
@@ -123,24 +131,25 @@ export default {
 
 
     //CHECK VALIDATION FORM
-    const rules = computed(() => {
-      return {
-        email: { required, email },
-        password: {
-          password: required,
-          minLength: minLength(6),
-        },
-      };
-    });
+    // const rules = computed(() => {
+    //   return {
+    //     email: { required, email },
+    //     password: {
+    //       password: required,
+    //       minLength: minLength(6),
+    //     },
+    //   };
+    // });
 
-    const v$ = useValidate(rules, state);
+    // const v$ = useValidate(rules, state);
     //
     return {
       state,
-      v$,
+      // v$,
       login,
       fbLogin,
       errMsg,
+      checkLogin
     };
   },
   methods: {
@@ -227,5 +236,8 @@ p {
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 20px;
+}
+#route {
+  color:green
 }
 </style>

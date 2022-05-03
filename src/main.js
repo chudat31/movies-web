@@ -1,14 +1,15 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+
+const app = createApp(App);
 import 'bootstrap/dist/css/bootstrap.css'
 import "bootstrap/dist/js/bootstrap.js"
-const app = createApp(App);
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 app.use(VueAxios, axios)
 import router from './router'
 import { initializeApp } from 'firebase/app';
-
+app.use(router);
 
 const firebaseConfig = {
     apiKey: "AIzaSyAUWYG1vBqNt0w6N5yuaVpeKCqfNfMZqmo",
@@ -24,7 +25,7 @@ initializeApp(firebaseConfig)
 
 // export { auth }
 
-app.use(router);
+
 import SignUp from './components/SignUp.vue'
 import LoginForm from './components/LoginForm.vue'
 import MovieDetail from './components/MovieDetail.vue'

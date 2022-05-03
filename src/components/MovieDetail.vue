@@ -9,31 +9,23 @@
         allow="autoplay"
         frameborder="0"
       ></iframe>
-      <!-- <iframe v-else-if="!getLink()" src="video.linkEmbed" frameborder="0"></iframe> -->
-      <!-- <img v-else :src="movie.image" alt="" /> -->
     </div>
     <div class="content">
       <h2>{{ movie.title }}</h2>
       <p>
-        <strong><i>Released: </i></strong>{{ movie.releaseDate }}
+        <strong><i>Released: </i></strong>{{ movie.release_date }}
       </p>
       <p>
-        <strong><i>Actors: </i></strong>{{ movie.stars }}
+        <strong><i>Homepage: </i></strong>{{ movie.homepage }}
       </p>
       <p>
-        <strong><i>Country: </i></strong>{{ movie.countries }}
+        <strong><i>Country: </i></strong>{{ countries.name }}
       </p>
       <p>
-        <strong><i>Genre: </i></strong>{{ movie.genres }}
+        <strong><i>Companies Production: </i></strong> {{ companies.name }}
       </p>
       <p>
-        <strong><i>Companies Production: </i></strong> {{ movie.companies }}
-      </p>
-      <p>
-        <strong><i>Directors: </i></strong> {{ movie.directors }}
-      </p>
-      <p>
-        <strong><i>Runtime: </i></strong> {{ movie.runtimeStr }}
+        <strong><i>Runtime: </i></strong> {{ movie.runtime }} (minutes)
       </p>
       <div>
         <button>
@@ -56,22 +48,35 @@
     </div>
   </div>
   <p>
-    <strong><i>Keywords: </i></strong> {{ movie.keywords }}
+    <strong><i>Keywords: </i></strong> {{ movie.tagline }}
   </p>
   <p class="plot">
-    <strong> <i>Plot: </i> </strong>{{ movie.plot }}
+    <strong> <i>Plot: </i> </strong>{{ movie.overview }}
   </p>
+
+  <div class="comment">
+    <input type="text" v-model="comment" placeholder="Your comment">
+    <button @click="sendComment">Send</button>
+    <!-- <span v-if="isCommented">Comment Successfully</span> -->
+  </div>
+  <div class="all_comments">
+    <ul v-for="comment in allComments" :key="comment.id">
+      <li>{{comment.comment}}}</li>
+    </ul>
+  </div>
   <h2>DIỄN VIÊN</h2>
   <div class="actor-list">
     <div class="actor-item" v-for="actor in actors" :key="actor.id">
-      <div class="actorImg">
-        <img :src="actor.image" alt="" />
+      <router-link :to="'/actor/' + actor.id">
+        <div class="actorImg">
+        <img :src="'https://image.tmdb.org/t/p/w500' + actor.profile_path" alt="" />
       </div>
       <div class="actorInfo">
         <p>
           <strong>{{ actor.name }}</strong>
         </p>
       </div>
+      </router-link>
     </div>
   </div>
   <h2>PHIM LIÊN QUAN</h2>
@@ -79,7 +84,7 @@
     <div class="similar-item" v-for="similar in similars" :key="similar.id">
       <router-link :to="'/movie/' + similar.id" class="similar-link">
         <div class="poster">
-          <img :src="similar.image" alt="" />
+          <img :src="'https://image.tmdb.org/t/p/w500' + similar.poster_path" alt="" />
         </div>
         <div class="similarInfo">
           <p class="title">
@@ -97,21 +102,29 @@ import WebHeader from "./WebHeader.vue";
 import WebFooter from "./WebFooter.vue";
 import { ref, onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
-import api from "@/api.js";
+// import api from "@/api.js";
 import axios from "axios";
 import {getAuth, onAuthStateChanged} from 'firebase/auth'
 export default {
   name: "MovieDetail",
   components: { WebHeader, WebFooter },
   setup() {
-    const name = ref();
-    const favourite = ref();
-    const movie = ref({});
-    const video = ref({});
-    const actors = ref([]);
-    const similars = ref([]);
-    const isAdmin = ref(false);
+    const name = ref()
+    const favourite = ref()
+    const movie = ref({})
+    const genres = ref([])
+    const video = ref({})
+    const actors = ref([])
+    const similars = ref([])
+    const isAdmin = ref(false)
+    const comment = ref('')
+    const isCommented = ref(false)
+    const allComments = ref([])
+    const countries = ref([])
+    const companies = ref([])
     const route = useRoute();
+
+    //Kiểm tra quyền ADMIN
     let auth;
     onMounted(() => {
       auth = getAuth();
@@ -125,43 +138,65 @@ export default {
         }
       });
     });
-    const title = onMounted(() => {
-      axios
-        .get(
-          `https://imdb-api.com/en/API/Title/${api.apikey3}/${route.params.id}`
+
+    //Lấy dữ liệu comment của phim
+    onMounted( async() => {
+      allComments.value = await axios.get('')
+    })
+
+    //Gửi comment
+    const sendComment = onMounted(()=>{
+      fetch('', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          comment: comment.value
+        })
+      })
+      .then(() => {
+        isCommented.value = true;
+      })
+      .catch(() => {
+        isCommented.value = false;
+      })
+    })
+
+    //Lấy dữ liệu phim từ API
+    const title = onMounted( async() => {
+      const data = await axios.get(
+          `https://api.themoviedb.org/3/movie/${route.params.id}?api_key=73b750a9c1721e4bce1ae7fc3a32c1a2`
         )
-        .then((data) => {
-          movie.value = data.data;
-        });
+      movie.value = data.data
+      countries.value = data.data.production_countries[0];
+      companies.value = data.data.production_companies[0];
     });
+
+    //Lấy link phim
     const getLink = () => {
-      return "https://www.2embed.ru/embed/imdb/movie?id=" + route.params.id;
+      return "https://www.2embed.ru/embed/tmdb/movie?id=" + route.params.id;
     };
-    onMounted(() => {
-      axios
-        .get(
-          `https://imdb-api.com/en/API/Trailer/${api.apikey3}/${route.params.id}`
-        )
-        .then((data) => {
-          video.value = data.data;
-        });
-    });
+
+    //Lấy dữ liệu về diễn viên
     const actor = onMounted(() => {
       axios
         .get(
-          `https://imdb-api.com/en/API/Title/${api.apikey3}/${route.params.id}`
+          `https://api.themoviedb.org/3/movie/${route.params.id}/credits?api_key=73b750a9c1721e4bce1ae7fc3a32c1a2&`
         )
         .then((data) => {
-          actors.value = data.data.actorList;
+          actors.value = data.data.cast;
         });
     });
+
+    //Lấy dữ liệu các phim liên quan
     const similiars = onMounted(() => {
       axios
         .get(
-          `https://imdb-api.com/en/API/Title/${api.apikey3}/${route.params.id}`
+          `https://api.themoviedb.org/3/movie/${route.params.id}/similar?api_key=73b750a9c1721e4bce1ae7fc3a32c1a2`
         )
         .then((data) => {
-          similars.value = data.data.similars;
+          similars.value = data.data.results;
         });
     });
     watch(route,()=>{
@@ -172,12 +207,18 @@ export default {
     return {
       name,
       favourite,
-      movie,
+      movie, companies,
+      genres, countries,
       getLink,
       video,
       actors,
       similars,
-      isAdmin
+      isAdmin,
+      comment, 
+      isCommented,
+      allComments,
+      sendComment,
+      title
     };
   },
 };

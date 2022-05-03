@@ -17,15 +17,14 @@
     </form>
     <span><i>Phim có từ khóa <strong>{{ search }}</strong></i></span>
     <div class="movies-list">
-      <div class="movie" v-for="movie in movies" :key="movie.imdbID">
-        <router-link :to="'/movie/' + movie.imdbID" class="movie-link">
-          <div v-if="movie.Poster!=='N/A'" class="poster">
-            <img :src="movie.Poster" alt="Movie Poster" />
-            <p class="type"><strong>{{ movie.Type }}</strong></p>
+      <div class="movie" v-for="movie in movies" :key="movie.id">
+        <router-link :to="'/movie/' + movie.id" class="movie-link">
+          <div v-if="movie.poster_path !== null" class="poster">
+            <img :src=" 'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="Movie Poster" />
           </div>
-          <div v-if="movie.Poster!=='N/A'" class="detail">
-            <p>{{ movie.Title }}</p>
-            <p><strong>Năm Phát Hành: </strong> {{ movie.Year }}</p>
+          <div  v-if="movie.poster_path !== null" class="detail">
+            <p>{{ movie.title }}</p>
+            <p><strong>Năm Phát Hành: </strong> {{ movie.release_date }}</p>
           </div>
         </router-link>
       </div>
@@ -38,7 +37,7 @@
 import WebHeader from "./WebHeader";
 import WebFooter from "./WebFooter";
 import axios from "axios";
-import api from "@/api.js";
+// import api from "@/api.js";
 export default {
   name: "FilmSearch",
   components: { WebFooter, WebHeader },
@@ -53,10 +52,11 @@ export default {
   methods: {
     getData() {
       axios
-        .get(`https://www.omdbapi.com/?s=${this.search}&apikey=${api.apikey1}`)
+        .get(`https://api.themoviedb.org/3/search/movie?api_key=73b750a9c1721e4bce1ae7fc3a32c1a2&query=${this.search}`)
         .then((data) => {
-          console.log(data);
-          this.movies = data.data.Search;         
+          if(data.data.results.poster_path !== 'null') {
+            this.movies = data.data.results; 
+          }    
         });
     },
     debounceSearch() {

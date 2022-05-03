@@ -64,7 +64,7 @@ import useValidate from "@vuelidate/core";
 // import WebHeader from './WebHeader.vue'
 import WebFooter from "./WebFooter.vue";
 import { required, email, minLength } from "@vuelidate/validators";
-import { computed, reactive } from "vue";
+import { computed, onMounted, reactive } from "vue";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -84,17 +84,29 @@ export default {
       },
     }); 
     // SIGN-UP
+    const signUpUser = onMounted(()=>{
+      fetch('https://jsonplaceholder.typicode.com/posts', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          userID : state.email,
+          title : state.username,
+          body: state.password.password
+        })
+      })
+    })
     const register = () => {
       createUserWithEmailAndPassword(
         getAuth(),
         state.email,
         state.password.password
       )
-        .then((data) => {
+        .then(() => {
           updateProfile(getAuth().currentUser, {
             displayName: state.username,
           });
-          console.log(data);
           router.push("/login");
         })
         .catch((error) => {
@@ -118,6 +130,7 @@ export default {
     return {
       state,
       v$,
+      signUpUser,
       register,
     };
   },

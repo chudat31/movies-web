@@ -51,6 +51,7 @@ export default {
   display: flex;
   /* justify-content: space-between; */
   flex-wrap: wrap;
+  
 }
 .film-item:hover {
   transform: scale(1.1,1.1);
@@ -62,6 +63,8 @@ export default {
 .film-item {
   margin: 12px;
   transition: 1s;
+  width: 300px;
+  height: 380px;
 }
 h2 {
   margin: 30px 10px;

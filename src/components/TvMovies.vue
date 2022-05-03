@@ -5,12 +5,12 @@
     <div class="movie-item" v-for="movie in movies" :key="movie.id">
       <router-link :to="'/movie/' + movie.id" class="movie-link">
         <div class="poster">
-          <img :src="movie.image" alt="" />
+          <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="" />
           <p class="rank"><strong>TVMovies</strong></p>
         </div>
         <div class="detail">
           <p><strong>{{movie.title}}</strong></p>
-          <p><strong>Năm Phát Hành: </strong>{{movie.description}}</p>
+          <p><strong>Năm Phát Hành: </strong>{{movie.release_date}}</p>
         </div>
       </router-link>
     </div>
@@ -22,7 +22,7 @@
 import axios from "axios";
 import WebHeader from './WebHeader';
 import WebFooter from './WebFooter';
-import api from "@/api.js";
+// import api from "@/api.js";
 export default {
   name: "TvMovies",
   components: {WebHeader, WebFooter},
@@ -32,12 +32,10 @@ export default {
     };
   },
   methods: {
-    getData() {
-      axios
-        .get(`https://imdb-api.com/API/AdvancedSearch/${api.apikey3}/?title_type=tv_movie`)
-        .then((data) => {
-          this.movies=data.data.results
-        });
+    async getData() {
+      const data = await axios
+        .get('https://api.themoviedb.org/3/trending/tv/week?api_key=73b750a9c1721e4bce1ae7fc3a32c1a2')
+      this.movies = data.data.results;
     },
   },
   mounted() {

@@ -1,20 +1,20 @@
 <template>
   <WebHeader />
-  <h2>TOP 100 PHIM ĐIỆN ẢNH THỊNH HÀNH</h2>
+  <h2>TOP 20 PHIM ĐIỆN ẢNH THỊNH HÀNH</h2>
   <div class="popular-film">
     <div class="movie-item" v-for="movie in movies" :key="movie.id">
       <router-link :to="'/movie/' + movie.id" class="movie-link">
         <div class="poster">
-          <img :src="movie.image" alt="" />
+          <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="" />
           <p class="rank">
-            <strong>RANKS: {{ movie.rank }}</strong>
+            <strong>POPULARITY: {{ movie.popularity }}</strong>
           </p>
         </div>
         <div class="detail">
           <p>
             <strong>{{ movie.title }}</strong>
           </p>
-          <p><strong>Năm Phát Hành: </strong>{{ movie.year }}</p>
+          <p><strong>Năm Phát Hành: </strong>{{ movie.release_date}}</p>
         </div>
       </router-link>
     </div>
@@ -26,7 +26,7 @@
 import axios from "axios";
 import WebHeader from "./WebHeader";
 import WebFooter from "./WebFooter";
-import api from "@/api.js";
+// import api from "@/api.js";
 export default {
   name: "PopularFilm",
   components: { WebHeader, WebFooter },
@@ -38,9 +38,9 @@ export default {
   methods: {
     getData() {
       axios
-        .get(`https://imdb-api.com/en/API/MostPopularMovies/${api.apikey3}`)
+        .get('https://api.themoviedb.org/3/movie/popular?api_key=73b750a9c1721e4bce1ae7fc3a32c1a2')
         .then((data) => {
-          this.movies = data.data.items;
+          this.movies = data.data.results;
         });
     },
   },
@@ -96,8 +96,8 @@ export default {
     rgb(53, 197, 24)
   );
   color: rgb(170, 32, 32);
-  width: 95px;
-  height: 30px;
+  width: 105px;
+  height: 55px;
   text-align: center;
   text-transform: uppercase;
 }

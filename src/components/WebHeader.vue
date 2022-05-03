@@ -52,9 +52,9 @@
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-             Welcome,
+            <strong>Welcome,</strong>
               <span
-                ><i>{{ username }}</i></span>
+                ><i><strong>{{ username }}</strong></i></span>
               <img id="avatar" :src="userImg" alt="">
             </div>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">

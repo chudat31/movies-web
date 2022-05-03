@@ -50,7 +50,7 @@
             <h5><strong>Doctor Strange</strong></h5>
           </div>
         </div>
-        <div class="carousel-item" data-bs-interval="2500">
+        <div class="carousel-item" data-bs-interval="2000">
           <img
             src="https://8ternal.com.vn/wp-content/uploads/2018/04/15400_1920x1080.jpg"
             class="d-block w-100"
@@ -60,7 +60,7 @@
             <h5><strong>The Avegers</strong></h5>
           </div>
         </div>
-        <div class="carousel-item" data-bs-interval="2500">
+        <div class="carousel-item" data-bs-interval="2000">
           <img
             src="https://echannel.vn/wp-content/uploads/2019/04/civilwar.jpg"
             class="d-block w-100"
@@ -70,7 +70,7 @@
             <h5><strong> Captain America: Civil World</strong></h5>
           </div>
         </div>
-        <div class="carousel-item" data-bs-interval="2500">
+        <div class="carousel-item" data-bs-interval="2000">
           <img
             src="https://nld.mediacdn.vn/2019/4/25/3515432-endgamedek-15561710302491765206118.jpg"
             class="d-block w-100"
