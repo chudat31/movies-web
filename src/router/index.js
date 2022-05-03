@@ -6,7 +6,7 @@ import MovieDetail from '../components/MovieDetail.vue';
 import FilmSearch from '../components/FilmSearch.vue';
 import PopularFilm from '../components/PopularFilm.vue';
 import ActionFilter from '../components/ActionFilter.vue';
-import AdventureFilter from '../components/AdventureFilter.vue';
+import DocumentaryFilter from '../components/DocumentaryFilter.vue';
 import ComedyFilter from '../components/ComedyFilter.vue';
 import HorrorFilter from '../components/HorrorFilter.vue';
 import FeatureFilm from '../components/FeatureFilm.vue';
@@ -55,8 +55,8 @@ const routes = [{
         component: ActionFilter
     },
     {
-        path: '/adventurefilm',
-        component: AdventureFilter
+        path: '/documentaryfilm',
+        component: DocumentaryFilter
     },
     {
         path: '/comedyfilm',

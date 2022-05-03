@@ -1,12 +1,12 @@
 <template>
   <WebHeader />
-  <h2>PHIM HÀI KỊCH</h2>
+  <h2>PHIM TÀI LIỆU</h2>
   <div class="popular-film">
     <div class="movie-item" v-for="movie in movies" :key="movie.id">
       <router-link :to="'/movie/' + movie.id" class="movie-link">
         <div class="poster">
           <img :src=" 'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="" />
-          <p class="rank"><strong>Comedy</strong></p>
+          <p class="rank"><strong>DOCUMENTARY</strong></p>
         </div>
         <div class="detail">
           <p><strong>{{movie.title}}</strong></p>
@@ -24,7 +24,7 @@ import WebHeader from './WebHeader';
 import WebFooter from './WebFooter';
 // import api from "@/api.js";
 export default {
-  name: "ComedyFilter",
+  name: "AdventureFilter",
   components: {WebHeader, WebFooter},
   data() {
     return {
@@ -34,7 +34,7 @@ export default {
   methods: {
     getData() {
       axios
-        .get(`https://api.themoviedb.org/3/discover/movie?api_key=73b750a9c1721e4bce1ae7fc3a32c1a2&with_genres=35`)
+        .get(`https://api.themoviedb.org/3/discover/movie?api_key=73b750a9c1721e4bce1ae7fc3a32c1a2&with_genres=99`)
         .then((data) => {
           this.movies=data.data.results
         });
@@ -88,7 +88,7 @@ export default {
 .poster>p {
     background:linear-gradient(to bottom right, rgb(8, 218, 183), rgb(53, 197, 24));
     color: rgb(170, 32, 32);
-    width: 90px;
+    width: 120px;
     height: 30px;
     text-align: center;
     text-transform: uppercase;

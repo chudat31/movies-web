@@ -113,8 +113,8 @@
                   >
                 </li>
                 <li>
-                  <router-link to="/adventurefilm" class="dropdown-item"
-                    >Phim Phiêu Lưu</router-link
+                  <router-link to="/documentaryfilm" class="dropdown-item"
+                    >Phim Tài Liệu</router-link
                   >
                 </li>
                 <li>
