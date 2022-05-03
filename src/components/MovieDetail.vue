@@ -122,8 +122,8 @@ export default {
     const allComments = ref([])
     const countries = ref([])
     const companies = ref([])
+    const imdb_id = ref('')
     const route = useRoute();
-
     //Kiểm tra quyền ADMIN
     let auth;
     onMounted(() => {
@@ -169,13 +169,14 @@ export default {
           `https://api.themoviedb.org/3/movie/${route.params.id}?api_key=73b750a9c1721e4bce1ae7fc3a32c1a2`
         )
       movie.value = data.data
+      imdb_id.value = data.data.imdb_id;
       countries.value = data.data.production_countries[0];
       companies.value = data.data.production_companies[0];
     });
 
     //Lấy link phim
     const getLink = () => {
-      return "https://www.2embed.ru/embed/tmdb/movie?id=" + route.params.id;
+      return "https://www.2embed.ru/embed/imdb/movie?id=" + imdb_id.value;
     };
 
     //Lấy dữ liệu về diễn viên
