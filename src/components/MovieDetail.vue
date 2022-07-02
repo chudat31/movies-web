@@ -176,7 +176,7 @@ export default {
 
     //Lấy link phim
     const getLink = () => {
-      return "https://www.2embed.ru/embed/imdb/movie?id=" + imdb_id.value;
+      return "https://2embed.org/embed/" + imdb_id.value;
     };
 
     //Lấy dữ liệu về diễn viên
